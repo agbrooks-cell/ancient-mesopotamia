@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ancient Mesopotamia: Explore Sumer</title>
+<style>
+:root{--ink:#2f2a22;--muted:#6d6254;--border:#d9cdb8;--paper:#fffdf7;--sand:#efe3c8;--green:#527a63;--greenbg:#dfeadf;--clay:#d8b27e}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f0e5;color:var(--ink);font-family:ui-rounded,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:1100px;margin:auto;padding:24px}
+.hero{background:linear-gradient(135deg,#efe3c8,#faf7ef);border:1px solid var(--border);border-radius:22px;padding:28px}
+.hero h1{margin:8px 0;font-size:clamp(1.8rem,4vw,3rem)}
+.hero p{max-width:850px;color:var(--muted);font-size:1.05rem;line-height:1.6}
+.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eee4d0;font-size:.8rem;font-weight:800}
+.score{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+button{min-height:44px;border:1px solid var(--border);border-radius:12px;padding:10px 14px;background:var(--paper);color:var(--ink);font-weight:750;cursor:pointer;font-size:.95rem}
+button:hover{background:#f2ead9}
+button.active{background:var(--greenbg);border-color:var(--green);color:#244a35}
+button:focus,input:focus,textarea:focus{outline:3px solid #a9c8b2;outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:18px}
+.card h2,.card h3{margin-top:0}
+.muted{color:var(--muted);line-height:1.55}
+.big{font-size:2.2rem}
+.hide{display:none!important}
+.progress{height:11px;background:#e5ddce;border-radius:99px;overflow:hidden;margin:10px 0}
+.progress span{display:block;height:100%;background:var(--green);width:0%;transition:width .3s}
+.mt{margin-top:14px}
+.tileboard{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:430px}
+.tile{aspect-ratio:1;border-radius:9px;background:#eadcc2;border:1px solid #c8b694;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;cursor:pointer}
+.tile.selected{outline:3px solid var(--green);background:#dce9df}
+.zig{display:flex;flex-direction:column;align-items:center;gap:4px;margin:16px 0}
+.step{height:40px;border-radius:6px;background:#c69b68;border:1px solid #98734b;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.85rem}
+.s1{width:42%}.s2{width:54%}.s3{width:66%}.s4{width:78%}.s5{width:90%}
+.chat{height:280px;overflow:auto;background:#f4efe4;border:1px solid var(--border);border-radius:14px;padding:12px}
+.bubble{padding:10px 12px;border-radius:13px;margin:8px 0;max-width:88%;line-height:1.45}
+.npc{background:white}.you{background:var(--greenbg);margin-left:auto}
+.choices{display:grid;gap:8px;margin-top:10px}
+.answer{padding:10px 12px;border-radius:10px;background:#fff;border:1px solid var(--border);cursor:pointer}
+.correct{background:#dce9df!important;border-color:var(--green)!important}
+.wrong{background:#f3dfd7!important;border-color:#ad6a53!important}
+textarea,input{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px;background:#fffdf7;font:inherit;margin-top:7px}
+.clay{min-height:80px;padding:14px;background:var(--clay);border:2px solid #a27c4d;border-radius:8px;font-family:Georgia,serif}
+.footer{text-align:center;color:var(--muted);font-size:.85rem;margin:24px 0}
+@media(max-width:520px){.app{padding:12px}.hero{padding:20px}.step{font-size:.72rem}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<section class="hero">
+<span class="pill">6th Grade • Ancient Civilizations</span>
+<h1>🏺 Ancient Mesopotamia: Explore Sumer</h1>
+<p>Travel back to the land between the Tigris and Euphrates Rivers. Explore cities, write cuneiform, build a ziggurat, solve challenges, and talk with a person from the ancient world.</p>
+<div class="score">
+<span class="pill">⭐ Knowledge: <b id="points">0</b></span>
+<span class="pill">🏆 Badges: <b id="badges">0</b>/5</span>
+</div>
+</section>
+
+<nav class="nav" aria-label="Learning areas">
+<button class="active" data-tab="home">🗺️ Explore</button>
+<button data-tab="cuneiform">✍️ Cuneiform</button>
+<button data-tab="ziggurat">🏛️ Ziggurat</button>
+<button data-tab="challenge">🧠 Challenges</button>
+<button data-tab="talk">💬 Meet a Sumerian</button>
+</nav>
+
+<section id="home" class="tab">
+<div class="grid">
+<article class="card"><div class="big">🌊</div><h3>Land Between Two Rivers</h3><p class="muted">Mesopotamia means “land between the rivers.” The Tigris and Euphrates helped provide water for farming and transportation.</p></article>
+<article class="card"><div class="big">🏙️</div><h3>Sumerian City-States</h3><p class="muted">Sumer was made up of independent city-states such as Ur, Uruk, and Lagash. Each had its own government and ruler.</p></article>
+<article class="card"><div class="big">👑</div><h3>Government & Society</h3><p class="muted">Kings ruled city-states. Sumerian society included farmers, craftspeople, merchants, priests, scribes, and enslaved people.</p></article>
+<article class="card"><div class="big">🌾</div><h3>Farming & Irrigation</h3><p class="muted">Sumerians built canals and irrigation systems to move river water to fields. Farming produced food that supported growing cities.</p></article>
+</div>
+<div class="card mt"><h3>🧭 Your Mission</h3><p>Complete activities to earn Knowledge Points and collect five badges: <b>River Expert, Scribe, Architect, Historian,</b> and <b>Time Traveler.</b></p><div class="progress"><span id="prog"></span></div><p class="muted" id="missionText">Start exploring!</p></div>
+</section>
+
+<section id="cuneiform" class="tab hide">
+<div class="card">
+<span class="pill">MISSION: BECOME A SCRIBE</span>
+<h2>✍️ Cuneiform Workshop</h2>
+<p class="muted">Cuneiform was written by pressing a wedge-shaped tool into wet clay. Decode a sign, then create your own clay-tablet message.</p>
+<div class="grid mt">
+<div class="card"><h3>🔎 Decode the Tablet</h3><p>Choose a symbol to investigate:</p>
+<div class="tileboard">
+<button class="tile symbol" data-word="king">𒈗</button>
+<button class="tile symbol" data-word="god">𒀭</button>
+<button class="tile symbol" data-word="grain">𒀀</button>
+<button class="tile symbol" data-word="city">𒌷</button>
+</div>
+<p id="decodeResult" class="muted mt">Cuneiform signs could represent words, sounds, or ideas.</p>
+</div>
+<div class="card"><h3>🧱 Create a Clay Tablet</h3>
+<label class="muted" for="tabletText">Write a short message as if you were a Sumerian scribe:</label>
+<textarea id="tabletText" rows="4" maxlength="160" placeholder="Example: Our city has plenty of grain."></textarea>
+<button id="stamp" class="mt">Press Wedge Marks</button>
+<div id="clay" class="clay mt"></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ziggurat" class="tab hide">
+<div class="card">
+<span class="pill">MISSION: MASTER BUILDER</span>
+<h2>🏛️ Build a Sumerian Ziggurat</h2>
+<p class="muted">Ziggurats were massive stepped structures associated with temples and religious life in Mesopotamian cities.</p>
+<div class="zig">
+<div class="step s1">Temple Area</div><div class="step s2">Upper Terrace</div><div class="step s3">Middle Terrace</div><div class="step s4">Lower Terrace</div><div class="step s5">Foundation</div>
+</div>
+<div class="choices">
+<button class="build" data-answer="false">🌾 Put the temple in a field far from the city</button>
+<button class="build" data-answer="true">🏛️ Place the temple area at the top</button>
+<button class="build" data-answer="false">🚢 Build it underwater</button>
+</div>
+<p id="buildResult" class="muted mt"></p>
+</div>
+</section>
+
+<section id="challenge" class="tab hide">
+<div class="card">
+<span class="pill">MISSION: HISTORIAN</span>
+<h2>🧠 Ancient Mesopotamia Challenge</h2>
+<p class="muted">Answer the questions to test your knowledge.</p>
+<div id="quiz"></div>
+<button id="nextQ" class="mt">Next Question</button>
+<p id="quizResult" aria-live="polite" class="muted"></p>
+</div>
+</section>
+
+<section id="talk" class="tab hide">
+<div class="card">
+<span class="pill">MISSION: TIME TRAVELER</span>
+<h2>💬 Meet Enhedu — A Sumerian Scribe</h2>
+<p class="muted">Enhedu is a fictional classroom character based on what historians know about scribes and daily life in ancient Mesopotamia.</p>
+<div class="chat" id="chat"><div class="bubble npc"><b>Enhedu:</b> Welcome, traveler! I work as a scribe. What would you like to know about life in our city?</div></div>
+<div class="choices">
+<button class="choice" data-q="job">What does a scribe do?</button>
+<button class="choice" data-q="city">What is your city like?</button>
+<button class="choice" data-q="religion">Why are ziggurats important?</button>
+<button class="choice" data-q="school">How do you learn to write?</button>
+</div>
+<div class="grid mt"><input id="studentQ" maxlength="120" placeholder="Ask Enhedu your own question..."><button id="ask">Ask Enhedu</button></div>
+</div>
+</section>
+
+<div class="footer">🏺 Ancient Mesopotamia Interactive • Designed for classroom exploration</div>
+</div>
+
+<script>
+(function(){
+const root=document.getElementById('app');
+let points=0,badges=new Set(),quizIndex=0;
+const $=id=>document.getElementById(id);
+
+function addPoints(n,badge){
+points+=n;
+if(badge)badges.add(badge);
+$('points').textContent=points;
+$('badges').textContent=badges.size;
+$('prog').style.width=Math.min(100,badges.size*20)+'%';
+$('missionText').textContent=badges.size===5?'All missions complete! You are an Ancient Mesopotamia expert!':'Keep exploring to earn all five badges.';
+}
+
+root.querySelectorAll('[data-tab]').forEach(btn=>{
+btn.addEventListener('click',()=>{
+root.querySelectorAll('.tab').forEach(x=>x.classList.add('hide'));
+root.querySelectorAll('[data-tab]').forEach(x=>x.classList.remove('active'));
+$(btn.dataset.tab).classList.remove('hide');
+btn.classList.add('active');
+});
+});
+
+const symbolInfo={
+king:'𒈗 is associated with “king.” Cuneiform developed as a way to record information and later represented many kinds of language.',
+god:'𒀭 is a well-known sign associated with “god” or “heaven.” Context mattered when interpreting cuneiform signs.',
+grain:'This sign is an example of how ancient writing could represent things important to daily life, such as food and agriculture.',
+city:'Sumerian scribes used writing to record information about cities, trade, goods, people, and institutions.'
+};
+root.querySelectorAll('.symbol').forEach(b=>b.addEventListener('click',()=>{
+$('decodeResult').textContent=symbolInfo[b.dataset.word];
+addPoints(5,'scribe');
+}));
+
+$('stamp').addEventListener('click',()=>{
+const t=$('tabletText').value.trim();
+if(!t){$('clay').textContent='Write a message first!';return}
+$('clay').textContent=t.split('').map((c,i)=>i%3===0?'◢':i%3===1?'◣':'◥').join(' ');
+addPoints(10,'scribe');
+});
+
+root.querySelectorAll('.build').forEach(b=>b.addEventListener('click',()=>{
+if(b.dataset.answer==='true'){
+$('buildResult').textContent='Correct! The temple area was at the top of the stepped structure. 🏛️';
+addPoints(15,'architect');
+}else{
+$('buildResult').textContent='Try again. Think about where the temple area would be placed on a stepped structure.';
+}
+}));
+
+const qs=[
+{q:'What does Mesopotamia mean?',a:['Land between the rivers','Land of mountains','Island of temples'],c:0},
+{q:'Which rivers are associated with Mesopotamia?',a:['Nile and Amazon','Tigris and Euphrates','Indus and Yellow'],c:1},
+{q:'What was cuneiform?',a:['A type of house','A writing system','A farming tool'],c:1},
+{q:'What was a ziggurat?',a:['A stepped religious structure','A military ship','A type of canal'],c:0},
+{q:'What did irrigation help Sumerians do?',a:['Move water to fields','Build ships','Predict eclipses'],c:0}
+];
+
+function renderQ(){
+const q=qs[quizIndex];
+$('quiz').innerHTML='<h3>'+q.q+'</h3><div class="choices">'+q.a.map((x,i)=>'<button class="qans" data-i="'+i+'">'+x+'</button>').join('')+'</div>';
+root.querySelectorAll('.qans').forEach(b=>b.addEventListener('click',()=>{
+const ok=Number(b.dataset.i)===q.c;
+root.querySelectorAll('.qans').forEach(x=>x.disabled=true);
+b.classList.add(ok?'correct':'wrong');
+$('quizResult').textContent=ok?'Correct! +10 Knowledge Points':'Not quite. Review the question and try the next one.';
+if(ok)addPoints(10,quizIndex===4?'historian':null);
+}));
+}
+renderQ();
+
+$('nextQ').addEventListener('click',()=>{
+quizIndex=(quizIndex+1)%qs.length;
+$('quizResult').textContent='';
+renderQ();
+});
+
+const replies={
+job:'I press signs into clay tablets. We record grain, trade, laws, taxes, stories, and other information. Writing helps our city keep track of what happens.',
+city:'Our city has homes, workshops, markets, temples, canals, fields, and busy streets. Different people have different jobs that help the city work.',
+religion:'The ziggurat is connected to the temple and religious life of the city. People believed the gods were important to the well-being of their community.',
+school:'Learning to write takes practice. Students copy signs again and again on clay. Becoming a skilled scribe requires patience and lots of practice.'
+};
+
+function talk(text){
+const clean=text.replace(/[<>]/g,'');
+const response=replies[text]||'That is an interesting question! Historians use artifacts, inscriptions, buildings, and other evidence to learn about our world. I would look at the evidence before making a conclusion.';
+$('chat').insertAdjacentHTML('beforeend','<div class="bubble you"><b>You:</b> '+clean+'</div><div class="bubble npc"><b>Enhedu:</b> '+response+'</div>');
+$('chat').scrollTop=$('chat').scrollHeight;
+addPoints(5,'time traveler');
+}
+
+root.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>talk(b.dataset.q)));
+$('ask').addEventListener('click',()=>{
+const v=$('studentQ').value.trim();
+if(v){talk(v);$('studentQ').value='';}
+});
+$('studentQ').addEventListener('keydown',e=>{if(e.key==='Enter')$('ask').click();});
+})();
+</script>
+</body>
+</html>
